@@ -47,8 +47,8 @@ const deleteTimeLog = (id: number) => {
 <template>
     <header></header>
 
-    <main class="flex bg-teal-200 min-h-screen text-base">
-        <div class="sm:max-w-md m:mt-6 sm:ml-auto sm:mr-auto sm:w-3/4 p-6">
+    <main class="flex min-h-screen text-base bg-green-50">
+        <div class="sm:max-w-xl m:mt-6 sm:ml-auto sm:mr-auto sm:w-3/4 p-6">
             <CreateLogForm @save-time-log="saveTimeLog" />
             <br />
             <TimeLogCard

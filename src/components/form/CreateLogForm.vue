@@ -47,7 +47,11 @@ const tags = ["projectA", "projectB", "client"];
 </script>
 
 <template>
-    <form class="mb-10" @submit.prevent="handleSubmit">
+    <form
+        class="mb-10 bg-green-200 pl-2 pr-2 pt-2 pb-4 rounded-lg"
+        @submit.prevent="handleSubmit"
+    >
+        <h1 class="text-center font-bold text-3xl">Create a new log</h1>
         <div class="flex justify-center mb-6">
             <div class="w-full">
                 <label class="text-sm font-bold ml-1">Title</label>

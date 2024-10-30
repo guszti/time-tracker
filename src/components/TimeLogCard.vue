@@ -8,7 +8,7 @@ defineEmits<{
 </script>
 
 <template>
-    <div class="mb-10">
+    <div class="mb-10 bg-green-200 pl-2 pr-2 pt-2 pb-4 rounded-lg">
         <div class="flex justify-between w-full mb-2 font-bold">
             <div>
                 <div class="font-bold text-xl max-w-64">
