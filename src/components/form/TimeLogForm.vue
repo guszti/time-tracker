@@ -1,9 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
+import type { TimeLog } from "@/interfaces";
+
+const { timeLog } = defineProps<{ timeLog?: TimeLog }>();
 
 const emit = defineEmits<{
     (
         e: "save-time-log",
+        id: number | null,
         title: string,
         date: string,
         from: string,
@@ -11,18 +15,20 @@ const emit = defineEmits<{
         description: string,
         tag: string,
     ): void;
+    (e: "cancel-edit"): void;
 }>();
 
-const title = ref("");
-const date = ref("");
-const from = ref("");
-const to = ref("");
-const description = ref("");
-const tag = ref("");
+const title = ref(timeLog?.title ?? "");
+const date = ref(timeLog?.date ?? "");
+const from = ref(timeLog?.from ?? "");
+const to = ref(timeLog?.to ?? "");
+const description = ref(timeLog?.description ?? "");
+const tag = ref(timeLog?.tag ?? "");
 
 const handleSubmit = () => {
     emit(
         "save-time-log",
+        timeLog?.id ?? null,
         title.value,
         date.value,
         from.value,
@@ -31,7 +37,11 @@ const handleSubmit = () => {
         tag.value,
     );
 
-    clearForm();
+    if (timeLog?.id) {
+        emit("cancel-edit");
+    } else {
+        clearForm();
+    }
 };
 
 const clearForm = () => {
@@ -51,7 +61,12 @@ const tags = ["projectA", "projectB", "client"];
         class="mb-10 bg-green-200 pl-2 pr-2 pt-2 pb-4 rounded-lg"
         @submit.prevent="handleSubmit"
     >
-        <h1 class="text-center font-bold text-3xl">Create a new log</h1>
+        <h1 v-if="!timeLog?.id" class="text-center font-bold text-3xl">
+            Create a new log
+        </h1>
+        <h1 v-else class="text-center font-bold text-3xl">
+            Editing "{{ timeLog?.title }}"
+        </h1>
         <div class="flex justify-center mb-6">
             <div class="w-full">
                 <label class="text-sm font-bold ml-1">Title</label>
@@ -140,10 +155,18 @@ const tags = ["projectA", "projectB", "client"];
                     @click="handleSubmit"
                 />
                 <input
+                    v-if="!timeLog?.id"
                     class="w-32 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
                     type="button"
                     value="Clear"
                     @click="clearForm"
+                />
+                <input
+                    v-else
+                    class="w-32 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+                    type="button"
+                    value="Cancel"
+                    @click="$emit('cancel-edit')"
                 />
             </div>
         </fieldset>
