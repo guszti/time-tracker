@@ -3,14 +3,25 @@ import TimeLogForm from "@/components/form/TimeLogForm.vue";
 import TimeLogCard from "@/components/TimeLogCard.vue";
 import { onMounted, ref, watch } from "vue";
 import type { TimeLog } from "@/interfaces";
+import Feedback from "@/components/Feedback.vue";
+import type { FeedbackTypes } from "@/types";
 
 const timeLogs = ref<TimeLog[]>([]);
+const feedbackType = ref<FeedbackTypes>("");
 
 onMounted(() => {
     const storedTimeLogs = localStorage.getItem("timeLogs") || "[]";
 
     timeLogs.value = JSON.parse(storedTimeLogs);
 });
+
+const showFeedback = (type: FeedbackTypes) => {
+    feedbackType.value = type;
+
+    setTimeout(() => {
+        feedbackType.value = "";
+    }, 2000);
+};
 
 watch(
     timeLogs,
@@ -39,10 +50,14 @@ const saveTimeLog = (timeLogData: TimeLog) => {
             return timeLog;
         });
     }
+
+    showFeedback("success");
 };
 
 const deleteTimeLog = (id: number) => {
     timeLogs.value = timeLogs.value.filter(timeLog => timeLog.id !== id);
+
+    showFeedback("success");
 };
 </script>
 
@@ -59,6 +74,7 @@ const deleteTimeLog = (id: number) => {
                 @delete-time-log="deleteTimeLog"
                 @save-time-log="saveTimeLog"
             />
+            <Feedback :type="feedbackType" />
         </div>
     </main>
 </template>
