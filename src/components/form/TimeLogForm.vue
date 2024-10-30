@@ -129,7 +129,6 @@ const tags = ["projectA", "projectB", "client"];
                 <select
                     v-model="tag"
                     class="w-40 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-                    type="text"
                     name="name"
                 >
                     <option value="">Choose a tag</option>
