@@ -1,6 +1,17 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { TimeLog } from "@/interfaces";
+
+const emit = defineEmits<{
+    (
+        e: "save-time-log",
+        title: string,
+        date: string,
+        from: string,
+        to: string,
+        description: string,
+        tag: string,
+    ): void;
+}>();
 
 const title = ref("");
 const date = ref("");
@@ -9,18 +20,18 @@ const to = ref("");
 const description = ref("");
 const tag = ref("");
 
-const timeLogs = ref<TimeLog[]>([]);
-
 const handleSubmit = () => {
-    timeLogs.value.push({
-        id: Date.now(),
-        title: title.value,
-        date: date.value,
-        from: from.value,
-        to: to.value,
-        description: description.value,
-        tag: tag.value,
-    });
+    emit(
+        "save-time-log",
+        title.value,
+        date.value,
+        from.value,
+        to.value,
+        description.value,
+        tag.value,
+    );
+
+    clearForm();
 };
 
 const clearForm = () => {
@@ -35,8 +46,6 @@ const clearForm = () => {
 const cancel = () => {
     console.log("cancelled");
 };
-
-console.log(timeLogs.value);
 
 const tags = ["projectA", "projectB", "client"];
 </script>
@@ -123,9 +132,9 @@ const tags = ["projectA", "projectB", "client"];
             <div class="flex justify-between w-80">
                 <input
                     class="w-24 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    type="submit"
+                    type="button"
                     value="Save"
-                    disabled
+                    @click="handleSubmit"
                 />
                 <input
                     class="w-24 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
