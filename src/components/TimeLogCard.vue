@@ -3,7 +3,7 @@ import type { TimeLog, TimeLogSubmitEvent } from "@/interfaces";
 import { ref } from "vue";
 import TimeLogForm from "@/components/form/TimeLogForm.vue";
 
-defineProps<{ timeLog: TimeLog }>();
+defineProps<{ timeLog: TimeLog; isVisible: boolean }>();
 
 interface Emits extends TimeLogSubmitEvent {
     (e: "delete-time-log", id: number): void;
@@ -25,7 +25,10 @@ const handleSave = (timeLog: TimeLog) => {
         @save-time-log="handleSave"
         @cancel-edit="isEditing = false"
     />
-    <div v-else class="mb-10 bg-green-200 pl-2 pr-2 pt-2 pb-4 rounded-lg">
+    <div
+        v-else-if="isVisible"
+        class="mb-10 bg-green-200 pl-2 pr-2 pt-2 pb-4 rounded-lg"
+    >
         <div class="flex justify-between w-full mb-2 font-bold">
             <div>
                 <div class="font-bold text-xl max-w-64">

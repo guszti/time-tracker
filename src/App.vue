@@ -9,6 +9,7 @@ import { validateTimeLog } from "@/services/validation";
 
 const timeLogs = ref<TimeLog[]>([]);
 const feedbackType = ref<FeedbackTypes>("");
+const shownDay = ref("");
 
 onMounted(() => {
     const storedTimeLogs = localStorage.getItem("timeLogs") || "[]";
@@ -74,10 +75,21 @@ const deleteTimeLog = (id: number) => {
     <main class="flex min-h-screen text-base bg-green-50">
         <div class="sm:max-w-xl m:mt-6 sm:ml-auto sm:mr-auto sm:w-3/4 p-6">
             <TimeLogForm @save-time-log="saveTimeLog" />
+            <label class="block text-sm font-bold ml-1">Filter by day</label>
+            <input
+                v-model="shownDay"
+                class="w-full border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                type="date"
+                placeholder="Date"
+                name="date"
+                required
+            />
+            <br />
             <TimeLogCard
                 v-for="timeLog in timeLogs"
                 :key="timeLog.id"
                 :timeLog="timeLog"
+                :isVisible="shownDay ? timeLog.date === shownDay : true"
                 @delete-time-log="deleteTimeLog"
                 @save-time-log="saveTimeLog"
             />
