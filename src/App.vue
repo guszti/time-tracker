@@ -5,6 +5,7 @@ import { onMounted, ref, watch } from "vue";
 import type { TimeLog } from "@/interfaces";
 import Feedback from "@/components/Feedback.vue";
 import type { FeedbackTypes } from "@/types";
+import { validateTimeLog } from "@/services/validation";
 
 const timeLogs = ref<TimeLog[]>([]);
 const feedbackType = ref<FeedbackTypes>("");
@@ -32,6 +33,12 @@ watch(
 );
 
 const saveTimeLog = (timeLogData: TimeLog) => {
+    if (!validateTimeLog(timeLogData)) {
+        showFeedback("error");
+
+        return;
+    }
+
     // If there is no id, a new object is created
     // else, the existing one is updated
     if (!timeLogData.id) {
