@@ -19,7 +19,7 @@ const tag = ref(timeLog?.tag ?? "");
 
 const handleSubmit = () => {
     emit("save-time-log", {
-        id: timeLog?.id ?? null,
+        id: timeLog?.id,
         title: title.value,
         date: date.value,
         from: from.value,

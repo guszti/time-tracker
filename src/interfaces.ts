@@ -1,5 +1,5 @@
 export interface TimeLog {
-    id: number | null;
+    id?: number;
     title: string;
     date: string;
     from: string;
