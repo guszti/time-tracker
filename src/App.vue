@@ -1,10 +1,16 @@
 <script setup lang="ts">
 import CreateLogForm from "@/components/form/CreateLogForm.vue";
 import TimeLogCard from "@/components/TimeLogCard.vue";
-import { ref } from "vue";
+import { onMounted, ref } from "vue";
 import type { TimeLog } from "@/interfaces";
 
 const timeLogs = ref<TimeLog[]>([]);
+
+onMounted(() => {
+    const storedTimeLogs = localStorage.getItem("timeLogs") || "[]";
+
+    timeLogs.value = JSON.parse(storedTimeLogs);
+});
 
 const saveTimeLog = (
     title: string,
@@ -23,6 +29,8 @@ const saveTimeLog = (
         description,
         tag,
     });
+
+    localStorage.setItem("timeLogs", JSON.stringify(timeLogs.value));
 };
 </script>
 
