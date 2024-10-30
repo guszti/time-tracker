@@ -5,7 +5,7 @@ defineProps<{ timeLog: TimeLog }>();
 </script>
 
 <template>
-    <div class="w-full p-6">
+    <div>
         <div class="flex justify-between w-full mb-2 font-bold">
             <div>
                 <div class="font-bold text-xl max-w-64">

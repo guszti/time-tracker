@@ -38,7 +38,7 @@ const saveTimeLog = (
     <header></header>
 
     <main class="flex bg-teal-200 min-h-screen text-base">
-        <div class="m:mt-6 sm:ml-auto sm:mr-auto w-full sm:w-3/4 p-6">
+        <div class="sm:max-w-md m:mt-6 sm:ml-auto sm:mr-auto sm:w-3/4 p-6">
             <CreateLogForm @save-time-log="saveTimeLog" />
             <br />
             <TimeLogCard

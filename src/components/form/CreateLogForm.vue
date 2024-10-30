@@ -51,39 +51,37 @@ const tags = ["projectA", "projectB", "client"];
 </script>
 
 <template>
-    <form class="sm:border border-black" @submit.prevent="handleSubmit">
-        <div class="flex justify-center">
-            <div>
+    <form @submit.prevent="handleSubmit">
+        <div class="flex justify-center mb-6">
+            <div class="w-full">
                 <label class="text-sm font-bold ml-1">Title</label>
-                <div class="mb-6">
-                    <input
-                        v-model="title"
-                        class="w-80"
-                        type="text"
-                        name="name"
-                        required
-                    />
-                </div>
+                <input
+                    v-model="title"
+                    class="w-full border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                    type="text"
+                    name="name"
+                    required
+                />
             </div>
         </div>
         <fieldset class="flex justify-center mb-6">
-            <div class="flex justify-between w-80">
-                <div>
+            <div class="flex justify-between w-full">
+                <div class="w-1/3">
                     <label class="block text-sm font-bold ml-1">Date</label>
                     <input
                         v-model="date"
-                        class="w-28 bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="w-full border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                         type="date"
                         placeholder="Date"
                         name="date"
                         required
                     />
                 </div>
-                <div>
+                <div class="w-1/4">
                     <label class="block text-sm font-bold ml-1">From</label>
                     <input
                         v-model="from"
-                        class="w-20 bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="w-full border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                         type="time"
                         placeholder="From"
                         name="from"
@@ -91,11 +89,11 @@ const tags = ["projectA", "projectB", "client"];
                         required
                     />
                 </div>
-                <div>
+                <div class="w-1/4">
                     <label class="block text-sm font-bold ml-1">To</label>
                     <input
                         v-model="to"
-                        class="w-20 bg-gray-50 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        class="w-full border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                         type="time"
                         placeholder="Title"
                         name="to"
@@ -107,22 +105,27 @@ const tags = ["projectA", "projectB", "client"];
             </div>
         </fieldset>
         <div class="flex justify-center">
-            <div>
+            <div class="w-full">
                 <label class="text-sm font-bold ml-1">Description</label>
                 <div class="mb-6">
                     <textarea
                         v-model="description"
-                        class="w-80"
+                        class="w-full h-28 p-2.5 text-sm text-gray-900 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
                         name="description"
                         required
                     />
                 </div>
             </div>
         </div>
-        <div class="flex justify-center mb-6">
+        <div class="flex mb-6">
             <div>
                 <label class="block text-sm font-bold ml-1">Tag</label>
-                <select v-model="tag" class="w-40" type="text" name="name">
+                <select
+                    v-model="tag"
+                    class="w-40 border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                    type="text"
+                    name="name"
+                >
                     <option value="">Choose a tag</option>
                     <option v-for="tag in tags" :key="tag">{{ tag }}</option>
                 </select>
