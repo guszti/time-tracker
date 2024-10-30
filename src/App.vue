@@ -3,5 +3,7 @@
 <template>
     <header></header>
 
-    <main><h1>The app</h1></main>
+    <main class="bg-teal-200 h-screen text-base">
+        <h1>The app</h1>
+    </main>
 </template>

@@ -1,7 +1,7 @@
-import pluginVue from "eslint-plugin-vue"
-import vueTsEslintConfig from "@vue/eslint-config-typescript"
-import skipFormatting from "@vue/eslint-config-prettier/skip-formatting"
-import prettier from "@vue/eslint-config-prettier"
+import pluginVue from "eslint-plugin-vue";
+import vueTsEslintConfig from "@vue/eslint-config-typescript";
+import skipFormatting from "@vue/eslint-config-prettier/skip-formatting";
+import prettier from "@vue/eslint-config-prettier";
 
 export default [
     {
@@ -18,4 +18,4 @@ export default [
     ...vueTsEslintConfig(),
     skipFormatting,
     prettier,
-]
+];
