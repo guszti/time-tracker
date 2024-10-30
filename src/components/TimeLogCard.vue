@@ -1,35 +1,20 @@
 <script setup lang="ts">
-import type { TimeLog } from "@/interfaces";
+import type { TimeLog, TimeLogSubmitEvent } from "@/interfaces";
 import { ref } from "vue";
 import TimeLogForm from "@/components/form/TimeLogForm.vue";
 
 defineProps<{ timeLog: TimeLog }>();
-const emit = defineEmits<{
+
+interface Emits extends TimeLogSubmitEvent {
     (e: "delete-time-log", id: number): void;
-    (
-        e: "save-time-log",
-        id: number | null,
-        title: string,
-        date: string,
-        from: string,
-        to: string,
-        description: string,
-        tag: string,
-    ): void;
-}>();
+}
+
+const emit = defineEmits<Emits>();
 
 const isEditing = ref(false);
 
-const handleSave = (
-    id: number | null,
-    title: string,
-    date: string,
-    from: string,
-    to: string,
-    description: string,
-    tag: string,
-) => {
-    emit("save-time-log", id, title, date, from, to, description, tag);
+const handleSave = (timeLog: TimeLog) => {
+    emit("save-time-log", timeLog);
 };
 </script>
 

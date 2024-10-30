@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CreateLogForm from "@/components/form/TimeLogForm.vue";
+import TimeLogForm from "@/components/form/TimeLogForm.vue";
 import TimeLogCard from "@/components/TimeLogCard.vue";
 import { onMounted, ref, watch } from "vue";
 import type { TimeLog } from "@/interfaces";
@@ -20,37 +20,18 @@ watch(
     { deep: true },
 );
 
-const saveTimeLog = (
-    id: number | null,
-    title: string,
-    date: string,
-    from: string,
-    to: string,
-    description: string,
-    tag: string,
-) => {
-    const timeLogData = {
-        title,
-        date,
-        from,
-        to,
-        description,
-        tag,
-    };
-
+const saveTimeLog = (timeLogData: TimeLog) => {
     // If there is no id, a new object is created
     // else, the existing one is updated
-    if (!id) {
+    if (!timeLogData.id) {
         timeLogs.value.push({
-            id: Date.now(),
             ...timeLogData,
+            id: Date.now(),
         });
     } else {
-        console.log("asd");
         timeLogs.value = timeLogs.value.map(timeLog => {
-            if (timeLog.id === id) {
+            if (timeLog.id === timeLogData.id) {
                 return {
-                    id,
                     ...timeLogData,
                 };
             }
@@ -70,7 +51,7 @@ const deleteTimeLog = (id: number) => {
 
     <main class="flex min-h-screen text-base bg-green-50">
         <div class="sm:max-w-xl m:mt-6 sm:ml-auto sm:mr-auto sm:w-3/4 p-6">
-            <CreateLogForm @save-time-log="saveTimeLog" />
+            <TimeLogForm @save-time-log="saveTimeLog" />
             <TimeLogCard
                 v-for="timeLog in timeLogs"
                 :key="timeLog.id"

@@ -1,22 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { TimeLog } from "@/interfaces";
+import type { TimeLog, TimeLogSubmitEvent } from "@/interfaces";
 
 const { timeLog } = defineProps<{ timeLog?: TimeLog }>();
 
-const emit = defineEmits<{
-    (
-        e: "save-time-log",
-        id: number | null,
-        title: string,
-        date: string,
-        from: string,
-        to: string,
-        description: string,
-        tag: string,
-    ): void;
+interface Emits extends TimeLogSubmitEvent {
     (e: "cancel-edit"): void;
-}>();
+}
+
+const emit = defineEmits<Emits>();
 
 const title = ref(timeLog?.title ?? "");
 const date = ref(timeLog?.date ?? "");
@@ -26,16 +18,15 @@ const description = ref(timeLog?.description ?? "");
 const tag = ref(timeLog?.tag ?? "");
 
 const handleSubmit = () => {
-    emit(
-        "save-time-log",
-        timeLog?.id ?? null,
-        title.value,
-        date.value,
-        from.value,
-        to.value,
-        description.value,
-        tag.value,
-    );
+    emit("save-time-log", {
+        id: timeLog?.id ?? null,
+        title: title.value,
+        date: date.value,
+        from: from.value,
+        to: to.value,
+        description: description.value,
+        tag: tag.value,
+    });
 
     if (timeLog?.id) {
         emit("cancel-edit");
