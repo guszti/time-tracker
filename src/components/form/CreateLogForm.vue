@@ -43,15 +43,11 @@ const clearForm = () => {
     tag.value = "";
 };
 
-const cancel = () => {
-    console.log("cancelled");
-};
-
 const tags = ["projectA", "projectB", "client"];
 </script>
 
 <template>
-    <form @submit.prevent="handleSubmit">
+    <form class="mb-10" @submit.prevent="handleSubmit">
         <div class="flex justify-center mb-6">
             <div class="w-full">
                 <label class="text-sm font-bold ml-1">Title</label>
@@ -134,22 +130,16 @@ const tags = ["projectA", "projectB", "client"];
         <fieldset class="flex justify-center">
             <div class="flex justify-between w-80">
                 <input
-                    class="w-24 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    class="w-32 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                     type="button"
                     value="Save"
                     @click="handleSubmit"
                 />
                 <input
-                    class="w-24 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
+                    class="w-32 bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded"
                     type="button"
                     value="Clear"
                     @click="clearForm"
-                />
-                <input
-                    class="w-24 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    type="button"
-                    value="Cancel"
-                    @click="cancel"
                 />
             </div>
         </fieldset>

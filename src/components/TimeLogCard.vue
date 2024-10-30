@@ -2,10 +2,13 @@
 import type { TimeLog } from "@/interfaces";
 
 defineProps<{ timeLog: TimeLog }>();
+defineEmits<{
+    (e: "delete-time-log", id: number): void;
+}>();
 </script>
 
 <template>
-    <div>
+    <div class="mb-10">
         <div class="flex justify-between w-full mb-2 font-bold">
             <div>
                 <div class="font-bold text-xl max-w-64">
@@ -32,6 +35,7 @@ defineProps<{ timeLog: TimeLog }>();
             </button>
             <button
                 class="w-2/5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                @click="$emit('delete-time-log', timeLog.id)"
             >
                 Delete
             </button>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import CreateLogForm from "@/components/form/CreateLogForm.vue";
 import TimeLogCard from "@/components/TimeLogCard.vue";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import type { TimeLog } from "@/interfaces";
 
 const timeLogs = ref<TimeLog[]>([]);
@@ -11,6 +11,14 @@ onMounted(() => {
 
     timeLogs.value = JSON.parse(storedTimeLogs);
 });
+
+watch(
+    timeLogs,
+    newTimeLogs => {
+        localStorage.setItem("timeLogs", JSON.stringify(newTimeLogs));
+    },
+    { deep: true },
+);
 
 const saveTimeLog = (
     title: string,
@@ -29,8 +37,10 @@ const saveTimeLog = (
         description,
         tag,
     });
+};
 
-    localStorage.setItem("timeLogs", JSON.stringify(timeLogs.value));
+const deleteTimeLog = (id: number) => {
+    timeLogs.value = timeLogs.value.filter(timeLog => timeLog.id !== id);
 };
 </script>
 
@@ -45,6 +55,7 @@ const saveTimeLog = (
                 v-for="timeLog in timeLogs"
                 :key="timeLog.id"
                 :timeLog="timeLog"
+                @delete-time-log="deleteTimeLog"
             />
         </div>
     </main>
