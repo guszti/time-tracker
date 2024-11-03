@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import TimeLogForm from "@/components/form/TimeLogForm.vue";
+import TimeLogForm from "@/components/TimeLogForm.vue";
 import TimeLogCard from "@/components/TimeLogCard.vue";
 import { onMounted, ref, watch } from "vue";
 import type { TimeLog } from "@/interfaces";
@@ -62,7 +62,7 @@ const saveTimeLog = (timeLogData: TimeLog) => {
     showFeedback("success");
 };
 
-const deleteTimeLog = (id: number) => {
+const deleteTimeLog = (id?: number) => {
     timeLogs.value = timeLogs.value.filter(timeLog => timeLog.id !== id);
 
     showFeedback("success");

@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { TimeLog, TimeLogSubmitEvent } from "@/interfaces";
 import { ref } from "vue";
-import TimeLogForm from "@/components/form/TimeLogForm.vue";
+import TimeLogForm from "@/components/TimeLogForm.vue";
 
 defineProps<{ timeLog: TimeLog; isVisible: boolean }>();
 
 interface Emits extends TimeLogSubmitEvent {
-    (e: "delete-time-log", id: number): void;
+    (e: "delete-time-log", id?: number): void;
 }
 
 const emit = defineEmits<Emits>();
