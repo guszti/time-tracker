@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import type { TimeLog } from "@/common/interfaces";
 import dayjs from "dayjs";
+import weekOfYear from "dayjs/plugin/weekOfYear";
 
 interface State {
     timeLogs: TimeLog[];
@@ -12,11 +13,33 @@ export const useTimeLogStore = defineStore("time-log", {
     }),
     getters: {
         getFilteredTimeLogs:
-            state => (tagFilter: string, date: string, isMonthly: boolean) => {
+            state =>
+            (
+                tagFilter: string,
+                date: string,
+                isWeekly: boolean,
+                isMonthly: boolean,
+            ) => {
                 if (!date) {
                     return state.timeLogs.filter(timeLog =>
                         tagFilter ? timeLog.tag === tagFilter : true,
                     );
+                }
+
+                if (isWeekly) {
+                    dayjs.extend(weekOfYear);
+
+                    const filterDate = dayjs(date);
+
+                    return state.timeLogs.filter(timeLog => {
+                        const timeLogDate = dayjs(timeLog.date);
+
+                        return (
+                            timeLogDate.year() === filterDate.year() &&
+                            timeLogDate.week() === filterDate.week() &&
+                            (tagFilter ? timeLog.tag === tagFilter : true)
+                        );
+                    });
                 }
 
                 if (isMonthly) {
