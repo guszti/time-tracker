@@ -12,7 +12,7 @@ const feedbackStore = useFeedbackStore();
 
 const isEditing = ref(false);
 
-const handleDelete = (id?: number) => {
+const handleDelete = (id: number) => {
     timeLogStore.deleteTimeLog(id);
     feedbackStore.showFeedback("success", "Time log removed");
 };

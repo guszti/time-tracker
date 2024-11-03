@@ -10,20 +10,19 @@ export const useTimeLogStore = defineStore("time-log", {
         timeLogs: [],
     }),
     actions: {
-        saveTimeLog(timeLogData: TimeLog) {
+        saveTimeLog(timeLogData: TimeLog | Partial<TimeLog>) {
+            const newTimeLog = {
+                ...timeLogData,
+                id: timeLogData.id ?? Date.now(),
+            } as TimeLog;
             // If there is no id, a new object is created
             // else, the existing one is updated
             if (!timeLogData.id) {
-                this.timeLogs.push({
-                    ...timeLogData,
-                    id: Date.now(),
-                });
+                this.timeLogs.push(newTimeLog);
             } else {
                 this.timeLogs = this.timeLogs.map(timeLog => {
                     if (timeLog.id === timeLogData.id) {
-                        return {
-                            ...timeLogData,
-                        };
+                        return newTimeLog;
                     }
 
                     return timeLog;

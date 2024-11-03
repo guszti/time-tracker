@@ -1,7 +1,7 @@
 import type { FeedbackTypes } from "@/common/types";
 
 export interface TimeLog {
-    id?: number;
+    id: number;
     title: string;
     date: string;
     from: string;
