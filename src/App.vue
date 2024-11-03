@@ -3,12 +3,12 @@ import TimeLogForm from "@/components/TimeLogForm.vue";
 import TimeLogCard from "@/components/TimeLogCard.vue";
 import { onMounted, ref, watch } from "vue";
 import type { TimeLog } from "@/common/interfaces";
-import Feedback from "@/components/feedback/Feedback.vue";
-import { useFeedback } from "@/components/feedback/composables/feedback-logic";
+import Feedback from "@/components/Feedback.vue";
+import { useFeedbackStore } from "@/pinia/feedback-store";
 
 const timeLogs = ref<TimeLog[]>([]);
-const { feedbackData, showFeedback } = useFeedback();
 const shownDay = ref("");
+const feedbackStore = useFeedbackStore();
 
 onMounted(() => {
     const storedTimeLogs = localStorage.getItem("timeLogs") || "[]";
@@ -44,13 +44,13 @@ const saveTimeLog = (timeLogData: TimeLog) => {
         });
     }
 
-    showFeedback("success", "Time log saved");
+    feedbackStore.showFeedback("success", "Time log saved");
 };
 
 const deleteTimeLog = (id?: number) => {
     timeLogs.value = timeLogs.value.filter(timeLog => timeLog.id !== id);
 
-    showFeedback("success", "Time log removed");
+    feedbackStore.showFeedback("success", "Time log removed");
 };
 </script>
 
@@ -78,7 +78,7 @@ const deleteTimeLog = (id?: number) => {
                 @delete-time-log="deleteTimeLog"
                 @save-time-log="saveTimeLog"
             />
-            <Feedback :data="feedbackData" />
+            <Feedback />
         </div>
     </main>
 </template>
