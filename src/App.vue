@@ -4,7 +4,6 @@ import TimeLogCard from "@/components/TimeLogCard.vue";
 import { onMounted, ref, watch } from "vue";
 import type { TimeLog } from "@/common/interfaces";
 import Feedback from "@/components/feedback/Feedback.vue";
-import { validateTimeLog } from "@/services/validation";
 import { useFeedback } from "@/components/feedback/composables/feedback-logic";
 
 const timeLogs = ref<TimeLog[]>([]);
@@ -26,12 +25,6 @@ watch(
 );
 
 const saveTimeLog = (timeLogData: TimeLog) => {
-    if (!validateTimeLog(timeLogData)) {
-        showFeedback("error", "Please fill out all the fields");
-
-        return;
-    }
-
     // If there is no id, a new object is created
     // else, the existing one is updated
     if (!timeLogData.id) {

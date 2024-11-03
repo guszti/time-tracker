@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import type { TimeLog, TimeLogSubmitEvent } from "@/common/interfaces";
+import { isAllFilled, isTimeRangeValid } from "@/services/validation";
+import { useFeedback } from "@/components/feedback/composables/feedback-logic";
+import Feedback from "@/components/feedback/Feedback.vue";
 
 const { timeLog } = defineProps<{ timeLog?: TimeLog }>();
 
@@ -10,6 +13,8 @@ interface Emits extends TimeLogSubmitEvent {
 
 const emit = defineEmits<Emits>();
 
+const { feedbackData, showFeedback } = useFeedback();
+
 const title = ref(timeLog?.title ?? "");
 const date = ref(timeLog?.date ?? "");
 const from = ref(timeLog?.from ?? "");
@@ -18,7 +23,7 @@ const description = ref(timeLog?.description ?? "");
 const tag = ref(timeLog?.tag ?? "");
 
 const handleSubmit = () => {
-    emit("save-time-log", {
+    const data = {
         id: timeLog?.id,
         title: title.value,
         date: date.value,
@@ -26,7 +31,21 @@ const handleSubmit = () => {
         to: to.value,
         description: description.value,
         tag: tag.value,
-    });
+    };
+
+    if (!isAllFilled(data)) {
+        showFeedback("error", "Please fill out all the fields");
+
+        return;
+    }
+
+    if (!isTimeRangeValid(data)) {
+        showFeedback("error", "Invalid time range");
+
+        return;
+    }
+
+    emit("save-time-log", data);
 
     if (timeLog?.id) {
         emit("cancel-edit");
@@ -161,6 +180,7 @@ const tags = ["projectA", "projectB", "client"];
             </div>
         </fieldset>
     </form>
+    <Feedback :data="feedbackData" />
 </template>
 
 <style scoped></style>
