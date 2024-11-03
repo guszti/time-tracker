@@ -15,6 +15,7 @@ export const useTimeLogStore = defineStore("time-log", {
                 ...timeLogData,
                 id: timeLogData.id ?? Date.now(),
             } as TimeLog;
+
             // If there is no id, a new object is created
             // else, the existing one is updated
             if (!timeLogData.id) {
