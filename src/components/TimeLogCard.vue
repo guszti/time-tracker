@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TimeLog, TimeLogSubmitEvent } from "@/interfaces";
+import type { TimeLog, TimeLogSubmitEvent } from "@/common/interfaces";
 import { ref } from "vue";
 import TimeLogForm from "@/components/TimeLogForm.vue";
 

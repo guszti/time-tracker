@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { FeedbackData } from "@/interfaces";
+import type { FeedbackData } from "@/common/interfaces";
 import { ref, watch } from "vue";
 
 const { data } = defineProps<{ data: FeedbackData | null }>();

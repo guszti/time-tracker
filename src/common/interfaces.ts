@@ -1,4 +1,4 @@
-import type { FeedbackTypes } from "@/types";
+import type { FeedbackTypes } from "@/common/types";
 
 export interface TimeLog {
     id?: number;

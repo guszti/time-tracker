@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { TimeLog, TimeLogSubmitEvent } from "@/interfaces";
+import type { TimeLog, TimeLogSubmitEvent } from "@/common/interfaces";
 
 const { timeLog } = defineProps<{ timeLog?: TimeLog }>();
 

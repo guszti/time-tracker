@@ -2,7 +2,7 @@
 import TimeLogForm from "@/components/TimeLogForm.vue";
 import TimeLogCard from "@/components/TimeLogCard.vue";
 import { onMounted, ref, watch } from "vue";
-import type { TimeLog } from "@/interfaces";
+import type { TimeLog } from "@/common/interfaces";
 import Feedback from "@/components/feedback/Feedback.vue";
 import { validateTimeLog } from "@/services/validation";
 import { useFeedback } from "@/components/feedback/composables/feedback-logic";
@@ -27,7 +27,7 @@ watch(
 
 const saveTimeLog = (timeLogData: TimeLog) => {
     if (!validateTimeLog(timeLogData)) {
-        showFeedback("error", "Failed to save time log");
+        showFeedback("error", "Please fill out all the fields");
 
         return;
     }

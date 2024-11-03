@@ -1,6 +1,6 @@
 import { ref } from "vue";
-import type { FeedbackData } from "@/interfaces";
-import type { FeedbackTypes } from "@/types";
+import type { FeedbackData } from "@/common/interfaces";
+import type { FeedbackTypes } from "@/common/types";
 
 export const useFeedback = () => {
     const feedbackData = ref<FeedbackData | null>(null);

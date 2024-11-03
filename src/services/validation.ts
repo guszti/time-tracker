@@ -1,4 +1,4 @@
-import type { TimeLog } from "@/interfaces";
+import type { TimeLog } from "@/common/interfaces";
 
 export const validateTimeLog = (timeLog: TimeLog) => {
     for (const key in timeLog) {
