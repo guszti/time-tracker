@@ -2,13 +2,13 @@
 import TimeLogForm from "@/components/TimeLogForm.vue";
 import TimeLogCard from "@/components/TimeLogCard.vue";
 import { onMounted, ref, watch } from "vue";
-import type { FeedbackData, TimeLog } from "@/interfaces";
-import Feedback from "@/components/Feedback.vue";
-import type { FeedbackTypes } from "@/types";
+import type { TimeLog } from "@/interfaces";
+import Feedback from "@/components/feedback/Feedback.vue";
 import { validateTimeLog } from "@/services/validation";
+import { useFeedback } from "@/components/feedback/composables/feedback-logic";
 
 const timeLogs = ref<TimeLog[]>([]);
-const feedbackData = ref<FeedbackData | null>(null);
+const { feedbackData, showFeedback } = useFeedback();
 const shownDay = ref("");
 
 onMounted(() => {
@@ -16,10 +16,6 @@ onMounted(() => {
 
     timeLogs.value = JSON.parse(storedTimeLogs);
 });
-
-const showFeedback = (type: FeedbackTypes, message: string) => {
-    feedbackData.value = { type, message };
-};
 
 watch(
     timeLogs,
