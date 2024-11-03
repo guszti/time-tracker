@@ -4,6 +4,8 @@ import { ref } from "vue";
 import TimeLogForm from "@/components/TimeLogForm.vue";
 import { useTimeLogStore } from "@/pinia/time-log-store";
 import { useFeedbackStore } from "@/pinia/feedback-store";
+import { weekDays } from "@/common/constants";
+import dayjs from "dayjs";
 
 defineProps<{ timeLog: TimeLog }>();
 
@@ -33,7 +35,10 @@ const handleDelete = (id: number) => {
                 <small class="block mb-2 font-bold">{{ timeLog.tag }}</small>
             </div>
             <div>
-                <small class="block">{{ timeLog.date }}</small>
+                <small class="text-center h-4 block">{{ timeLog.date }}</small>
+                <small class="text-center block">{{
+                    weekDays[dayjs(timeLog.date).day() - 1]
+                }}</small>
                 <small class="block"
                     >{{ timeLog.from }} - {{ timeLog.to }}</small
                 >
