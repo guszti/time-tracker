@@ -2,13 +2,13 @@
 import TimeLogForm from "@/components/TimeLogForm.vue";
 import TimeLogCard from "@/components/TimeLogCard.vue";
 import { onMounted, ref, watch } from "vue";
-import type { TimeLog } from "@/interfaces";
+import type { FeedbackData, TimeLog } from "@/interfaces";
 import Feedback from "@/components/Feedback.vue";
 import type { FeedbackTypes } from "@/types";
 import { validateTimeLog } from "@/services/validation";
 
 const timeLogs = ref<TimeLog[]>([]);
-const feedbackType = ref<FeedbackTypes>("");
+const feedbackData = ref<FeedbackData | null>(null);
 const shownDay = ref("");
 
 onMounted(() => {
@@ -17,12 +17,8 @@ onMounted(() => {
     timeLogs.value = JSON.parse(storedTimeLogs);
 });
 
-const showFeedback = (type: FeedbackTypes) => {
-    feedbackType.value = type;
-
-    setTimeout(() => {
-        feedbackType.value = "";
-    }, 2000);
+const showFeedback = (type: FeedbackTypes, message: string) => {
+    feedbackData.value = { type, message };
 };
 
 watch(
@@ -35,7 +31,7 @@ watch(
 
 const saveTimeLog = (timeLogData: TimeLog) => {
     if (!validateTimeLog(timeLogData)) {
-        showFeedback("error");
+        showFeedback("error", "Failed to save time log");
 
         return;
     }
@@ -59,13 +55,13 @@ const saveTimeLog = (timeLogData: TimeLog) => {
         });
     }
 
-    showFeedback("success");
+    showFeedback("success", "Time log saved");
 };
 
 const deleteTimeLog = (id?: number) => {
     timeLogs.value = timeLogs.value.filter(timeLog => timeLog.id !== id);
 
-    showFeedback("success");
+    showFeedback("success", "Time log removed");
 };
 </script>
 
@@ -93,7 +89,7 @@ const deleteTimeLog = (id?: number) => {
                 @delete-time-log="deleteTimeLog"
                 @save-time-log="saveTimeLog"
             />
-            <Feedback :type="feedbackType" />
+            <Feedback :data="feedbackData" />
         </div>
     </main>
 </template>

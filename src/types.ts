@@ -1,1 +1,1 @@
-export type FeedbackTypes = "success" | "error" | "";
+export type FeedbackTypes = "success" | "error";
