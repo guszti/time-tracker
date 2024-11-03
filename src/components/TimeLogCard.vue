@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import type { TimeLog, TimeLogSubmitEvent } from "@/common/interfaces";
+import type { TimeLog } from "@/common/interfaces";
 import { ref } from "vue";
 import TimeLogForm from "@/components/TimeLogForm.vue";
+import { useTimeLogStore } from "@/pinia/time-log-store";
+import { useFeedbackStore } from "@/pinia/feedback-store";
 
 defineProps<{ timeLog: TimeLog; isVisible: boolean }>();
 
-interface Emits extends TimeLogSubmitEvent {
-    (e: "delete-time-log", id?: number): void;
-}
-
-const emit = defineEmits<Emits>();
+const timeLogStore = useTimeLogStore();
+const feedbackStore = useFeedbackStore();
 
 const isEditing = ref(false);
 
-const handleSave = (timeLog: TimeLog) => {
-    emit("save-time-log", timeLog);
+const handleDelete = (id?: number) => {
+    timeLogStore.deleteTimeLog(id);
+    feedbackStore.showFeedback("success", "Time log removed");
 };
 </script>
 
@@ -22,7 +22,6 @@ const handleSave = (timeLog: TimeLog) => {
     <TimeLogForm
         v-if="isEditing"
         :timeLog="timeLog"
-        @save-time-log="handleSave"
         @cancel-edit="isEditing = false"
     />
     <div
@@ -56,7 +55,7 @@ const handleSave = (timeLog: TimeLog) => {
             </button>
             <button
                 class="w-2/5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                @click="$emit('delete-time-log', timeLog.id)"
+                @click="handleDelete(timeLog.id)"
             >
                 Delete
             </button>

@@ -1,18 +1,20 @@
 <script setup lang="ts">
 import { ref } from "vue";
-import type { TimeLog, TimeLogSubmitEvent } from "@/common/interfaces";
+import type { TimeLog } from "@/common/interfaces";
 import { isAllFilled, isTimeRangeValid } from "@/services/validation";
 import { useFeedbackStore } from "@/pinia/feedback-store";
+import { useTimeLogStore } from "@/pinia/time-log-store";
 
 const { timeLog } = defineProps<{ timeLog?: TimeLog }>();
 
-interface Emits extends TimeLogSubmitEvent {
+interface Emits {
     (e: "cancel-edit"): void;
 }
 
 const emit = defineEmits<Emits>();
 
 const feedbackStore = useFeedbackStore();
+const timeLogStore = useTimeLogStore();
 
 const title = ref(timeLog?.title ?? "");
 const date = ref(timeLog?.date ?? "");
@@ -44,7 +46,7 @@ const handleSubmit = () => {
         return;
     }
 
-    emit("save-time-log", data);
+    timeLogStore.saveTimeLog(data);
 
     if (timeLog?.id) {
         emit("cancel-edit");

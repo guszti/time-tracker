@@ -10,10 +10,6 @@ export interface TimeLog {
     tag: string;
 }
 
-export interface TimeLogSubmitEvent {
-    (e: "save-time-log", timeLog: TimeLog): void;
-}
-
 export interface FeedbackData {
     type: FeedbackTypes;
     message: string;
