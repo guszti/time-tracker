@@ -4,6 +4,7 @@ import type { TimeLog } from "@/common/interfaces";
 import { isAllFilled, isTimeRangeValid } from "@/services/validation";
 import { useFeedbackStore } from "@/pinia/feedback-store";
 import { useTimeLogStore } from "@/pinia/time-log-store";
+import { tags } from "@/common/constants";
 
 const { timeLog } = defineProps<{ timeLog?: TimeLog }>();
 
@@ -63,8 +64,6 @@ const clearForm = () => {
     description.value = "";
     tag.value = "";
 };
-
-const tags = ["projectA", "projectB", "client"];
 </script>
 
 <template>
@@ -98,7 +97,6 @@ const tags = ["projectA", "projectB", "client"];
                         v-model="date"
                         class="w-full border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                         type="date"
-                        placeholder="Date"
                         name="date"
                         required
                     />
@@ -109,7 +107,6 @@ const tags = ["projectA", "projectB", "client"];
                         v-model="from"
                         class="w-full border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                         type="time"
-                        placeholder="From"
                         name="from"
                         value="00:00"
                         required
@@ -121,7 +118,6 @@ const tags = ["projectA", "projectB", "client"];
                         v-model="to"
                         class="w-full border leading-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                         type="time"
-                        placeholder="Title"
                         name="to"
                         value="00:00"
                         :min="from"

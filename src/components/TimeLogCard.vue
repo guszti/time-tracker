@@ -5,7 +5,7 @@ import TimeLogForm from "@/components/TimeLogForm.vue";
 import { useTimeLogStore } from "@/pinia/time-log-store";
 import { useFeedbackStore } from "@/pinia/feedback-store";
 
-defineProps<{ timeLog: TimeLog; isVisible: boolean }>();
+defineProps<{ timeLog: TimeLog }>();
 
 const timeLogStore = useTimeLogStore();
 const feedbackStore = useFeedbackStore();
@@ -24,10 +24,7 @@ const handleDelete = (id: number) => {
         :timeLog="timeLog"
         @cancel-edit="isEditing = false"
     />
-    <div
-        v-else-if="isVisible"
-        class="mb-10 bg-green-200 pl-2 pr-2 pt-2 pb-4 rounded-lg"
-    >
+    <div v-else class="mb-10 bg-green-200 pl-2 pr-2 pt-2 pb-4 rounded-lg">
         <div class="flex justify-between w-full mb-2 font-bold">
             <div>
                 <div class="font-bold text-xl max-w-64">

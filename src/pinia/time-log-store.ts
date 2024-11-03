@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import type { TimeLog } from "@/common/interfaces";
+import dayjs from "dayjs";
 
 interface State {
     timeLogs: TimeLog[];
@@ -9,6 +10,36 @@ export const useTimeLogStore = defineStore("time-log", {
     state: (): State => ({
         timeLogs: [],
     }),
+    getters: {
+        getFilteredTimeLogs:
+            state => (tagFilter: string, date: string, isMonthly: boolean) => {
+                if (!date) {
+                    return state.timeLogs.filter(timeLog =>
+                        tagFilter ? timeLog.tag === tagFilter : true,
+                    );
+                }
+
+                if (isMonthly) {
+                    const filterDate = dayjs(date);
+
+                    return state.timeLogs.filter(timeLog => {
+                        const timeLogDate = dayjs(timeLog.date);
+
+                        return (
+                            timeLogDate.year() === filterDate.year() &&
+                            timeLogDate.month() === filterDate.month() &&
+                            (tagFilter ? timeLog.tag === tagFilter : true)
+                        );
+                    });
+                }
+
+                return state.timeLogs.filter(
+                    timeLog =>
+                        timeLog.date === date &&
+                        (tagFilter ? timeLog.tag === tagFilter : true),
+                );
+            },
+    },
     actions: {
         saveTimeLog(timeLogData: TimeLog | Partial<TimeLog>) {
             const newTimeLog = {
