@@ -20,9 +20,12 @@ export const useTimeLogStore = defineStore("time-log", {
                 isWeekly: boolean,
                 isMonthly: boolean,
             ) => {
+                const isTagIncluded = (timeLog: TimeLog) =>
+                    tagFilter ? timeLog.tag === tagFilter : true;
+
                 if (!date) {
                     return state.timeLogs.filter(timeLog =>
-                        tagFilter ? timeLog.tag === tagFilter : true,
+                        isTagIncluded(timeLog),
                     );
                 }
 
@@ -37,7 +40,7 @@ export const useTimeLogStore = defineStore("time-log", {
                         return (
                             timeLogDate.year() === filterDate.year() &&
                             timeLogDate.week() === filterDate.week() &&
-                            (tagFilter ? timeLog.tag === tagFilter : true)
+                            isTagIncluded(timeLog)
                         );
                     });
                 }
@@ -51,15 +54,13 @@ export const useTimeLogStore = defineStore("time-log", {
                         return (
                             timeLogDate.year() === filterDate.year() &&
                             timeLogDate.month() === filterDate.month() &&
-                            (tagFilter ? timeLog.tag === tagFilter : true)
+                            isTagIncluded(timeLog)
                         );
                     });
                 }
 
                 return state.timeLogs.filter(
-                    timeLog =>
-                        timeLog.date === date &&
-                        (tagFilter ? timeLog.tag === tagFilter : true),
+                    timeLog => timeLog.date === date && isTagIncluded(timeLog),
                 );
             },
     },

@@ -9,7 +9,3 @@ npm ci
 ```sh
 npm run dev
 ```
-
-Ami nem fért bele az időbe:
-- heti lebontás
-- havi lebontás

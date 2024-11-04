@@ -71,12 +71,18 @@ watch(
                 <option v-for="tag in tags" :key="tag">{{ tag }}</option>
             </select>
             <TimeLogCard
-                v-for="timeLog in timeLogStore.getFilteredTimeLogs(
-                    tagFilter,
-                    shownDay,
-                    isWeekly,
-                    isMonthly,
-                )"
+                v-for="timeLog in timeLogStore
+                    .getFilteredTimeLogs(
+                        tagFilter,
+                        shownDay,
+                        isWeekly,
+                        isMonthly,
+                    )
+                    .sort(
+                        (a, b) =>
+                            new Date(a.date).getTime() -
+                            new Date(b.date).getTime(),
+                    )"
                 :key="timeLog.id"
                 :timeLog="timeLog"
             />
