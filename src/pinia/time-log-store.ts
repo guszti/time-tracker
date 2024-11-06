@@ -7,13 +7,12 @@ import { useFilterStore } from "@/pinia/filter-store";
 interface State {
     timeLogs: TimeLog[];
 }
-
 export const useTimeLogStore = defineStore("time-log", {
     state: (): State => ({
         timeLogs: [],
     }),
     getters: {
-        getFilteredTimeLogs: state => () => {
+        getFilteredTimeLogs(state) {
             const filterStore = useFilterStore();
             const { shownDay, isMonthly, isWeekly, tagFilter } =
                 storeToRefs(filterStore);
