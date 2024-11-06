@@ -5,13 +5,8 @@ import { onMounted, watch } from "vue";
 import Feedback from "@/components/Feedback.vue";
 import { useTimeLogStore } from "@/pinia/time-log-store";
 import Filters from "@/components/Filters.vue";
-import { useFilterStore } from "@/pinia/filter-store";
-import { storeToRefs } from "pinia";
 
 const timeLogStore = useTimeLogStore();
-
-const filterStore = useFilterStore();
-const { shownDay, isMonthly, isWeekly, tagFilter } = storeToRefs(filterStore);
 
 onMounted(() => {
     const storedTimeLogs = localStorage.getItem("timeLogs") || "[]";
@@ -37,12 +32,7 @@ watch(
             <Filters />
             <TimeLogCard
                 v-for="timeLog in timeLogStore
-                    .getFilteredTimeLogs(
-                        tagFilter,
-                        shownDay,
-                        isWeekly,
-                        isMonthly,
-                    )
+                    .getFilteredTimeLogs()
                     .sort(
                         (a, b) =>
                             new Date(a.date).getTime() -
