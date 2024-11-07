@@ -12,16 +12,12 @@ export const useTimeLogStore = defineStore("time-log", {
         timeLogs: [],
     }),
     getters: {
-        getFilteredTimeLogs(state) {
+        getTimeFilteredTimeLogs(state) {
             const filterStore = useFilterStore();
-            const { shownDay, isMonthly, isWeekly, tagFilter } =
-                storeToRefs(filterStore);
-
-            const isTagIncluded = (timeLog: TimeLog) =>
-                tagFilter.value ? timeLog.tag === tagFilter.value : true;
+            const { shownDay, isMonthly, isWeekly } = storeToRefs(filterStore);
 
             if (!shownDay.value) {
-                return state.timeLogs.filter(timeLog => isTagIncluded(timeLog));
+                return state.timeLogs;
             }
 
             if (isWeekly.value) {
@@ -34,8 +30,7 @@ export const useTimeLogStore = defineStore("time-log", {
 
                     return (
                         timeLogDate.year() === filterDate.year() &&
-                        timeLogDate.week() === filterDate.week() &&
-                        isTagIncluded(timeLog)
+                        timeLogDate.week() === filterDate.week()
                     );
                 });
             }
@@ -48,15 +43,29 @@ export const useTimeLogStore = defineStore("time-log", {
 
                     return (
                         timeLogDate.year() === filterDate.year() &&
-                        timeLogDate.month() === filterDate.month() &&
-                        isTagIncluded(timeLog)
+                        timeLogDate.month() === filterDate.month()
                     );
                 });
             }
 
             return state.timeLogs.filter(
-                timeLog =>
-                    timeLog.date === shownDay.value && isTagIncluded(timeLog),
+                timeLog => timeLog.date === shownDay.value,
+            );
+        },
+        getTagAndTimeFilteredTimeLogs(): TimeLog[] {
+            const filterStore = useFilterStore();
+            const timeFilteredTimeLogs = this.getTimeFilteredTimeLogs;
+
+            return filterStore.tagFilter
+                ? timeFilteredTimeLogs.filter(
+                      timeLog => timeLog.tag === filterStore.tagFilter,
+                  )
+                : timeFilteredTimeLogs;
+        },
+        getSortedFilteredTimeLogs(): TimeLog[] {
+            return this.getTagAndTimeFilteredTimeLogs.sort(
+                (a, b) =>
+                    new Date(a.date).getTime() - new Date(b.date).getTime(),
             );
         },
     },

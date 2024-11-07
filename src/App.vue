@@ -31,10 +31,7 @@ watch(
             <TimeLogForm />
             <Filters />
             <TimeLogCard
-                v-for="timeLog in timeLogStore.getFilteredTimeLogs.sort(
-                    (a, b) =>
-                        new Date(a.date).getTime() - new Date(b.date).getTime(),
-                )"
+                v-for="timeLog in timeLogStore.getSortedFilteredTimeLogs"
                 :key="timeLog.id"
                 :timeLog="timeLog"
             />
